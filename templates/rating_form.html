@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Submit a film rating</title>
+    </head>
+    <body>
+        <h1>Submit a film rating</h1>
+        <form action="/films/submit" method="post">
+            <label for="filmname">Film name:</label><br>
+            <input type="text" id="filmname" name="filmname"><br>
+            <label for="stars">Rating in stars:</label><br>
+            {% for i in range(1,6) %}
+            <input type="radio" id="stars-{{ i }}" name="stars" value="{{ i }}">
+            <label for="stars-{{ i }}">{{ i }}</label><br>
+            {% endfor %}
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

@@ -1,5 +1,4 @@
-from re import L
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -21,3 +20,15 @@ def get_films_table():
     if stars != "":
         films = [film for film in films if film['rating'] == stars]
     return render_template('films_table.html', films=films)
+
+@app.route('/films/submit')
+def get_rating_form():
+    return render_template('rating_form.html')
+
+@app.route('/films/submit', methods=['POST'])
+def add_rating():
+    filmname = request.form['filmname']
+    stars = request.form['stars']
+    with open('films.csv', 'a') as f:
+        f.write(f"{filmname},{stars}\n")
+    return redirect('/films/submit')
