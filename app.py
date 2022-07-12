@@ -1,6 +1,5 @@
 from re import L
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -18,4 +17,7 @@ def get_films_table():
         lines = f.read().splitlines()
         lines = [line.split(',') for line in lines]
         films = [{'title': line[0], 'rating': line[1]} for line in lines]
+    stars = request.values.get("stars", "")
+    if stars != "":
+        films = [film for film in films if film['rating'] == stars]
     return render_template('films_table.html', films=films)
